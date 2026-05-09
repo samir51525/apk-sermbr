@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Models App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-pink: #08192b;
+            --header-bg: #08192b;
+            --text-gradient: linear-gradient(90deg, #1BC2E8 0%, #8A6CEF 100%);
+            --white: #FFFFFF;
+            --text-dark: #2A2A2A;
+            --text-muted: #8A8A8A;
+            --btn-green: linear-gradient(90deg, #11BB8D 0%, #1BC197 100%);
+            --btn-red: #E55050;
+            --pink-text: #E75185;
+            --green-text: #17B896;
+            --shadow-soft: 0 10px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-pink);
+            color: var(--text-dark);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        .app-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: var(--bg-pink);
+            min-height: 100vh;
+            position: relative;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Header Section */
+
+        .header-section {
+            background: var(--header-bg);
+            padding: 30px 20px 65px 20px;
+            text-align: center;
+            color: var(--white);
+            border-bottom-left-radius: 25px;
+            border-bottom-right-radius: 25px;
+            position: relative;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .rocket-icon {
+            font-size: 32px;
+            color: #1BC2E8;
+            transform: rotate(-15deg);
+            margin-top: 5px;
+        }
+
+        .header-title h1 {
+            font-size: 34px;
+            font-weight: 800;
+            letter-spacing: 0px;
+            background: var(--text-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: none;
+            line-height: 1.1;
+            text-align: left;
+        }
+
+        .subtitle {
+            font-size: 15px;
+            color: #A1B4C7;
+            font-weight: 500;
+            line-height: 1.5;
+            max-width: 90%;
+            margin: 0 auto;
+        }
+
+        /* Stats Box */
+
+        .stats-box {
+            background: var(--white);
+            border-radius: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            position: absolute;
+            bottom: -35px;
+            left: 20px;
+            right: 20px;
+            box-shadow: var(--shadow-soft);
+            z-index: 10;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+
+        .stat-value {
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .text-pink {
+            color: var(--pink-text);
+        }
+
+        .text-green {
+            color: var(--green-text);
+        }
+
+        .text-red {
+            color: var(--btn-red);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        .stat-divider {
+            width: 1px;
+            height: 35px;
+            background-color: #EAEAEA;
+        }
+
+        /* Download Section */
+
+        .download-section {
+            padding: 70px 20px 25px;
+            text-align: center;
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, #FFFFFF 0%, #F8F8F8 100%);
+            color: var(--bg-pink);
+            border: none;
+            padding: 16px 36px;
+            font-size: 18px;
+            font-weight: 1000;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: transform 0.2s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .download-btn:active {
+            transform: scale(0.95);
+        }
+
+        .download-btn i {
+            font-size: 26px;
+            color: #3DDC84;
+            /* Android Green */
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            }
+            50% {
+                transform: scale(1.04);
+                box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            }
+        }
+
+        /* Models Grid */
+
+        .models-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            padding: 10px 20px 25px;
+        }
+
+        .model-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease;
+        }
+
+        .model-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-image-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 120%;
+            /* creates the portrait aspect ratio */
+            overflow: hidden;
+            background-color: #f0f0f0;
+        }
+
+        .card-image-wrapper img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .age-badge {
+            position: absolute;
+            bottom: -15px;
+            left: 15px;
+            background: #2D2D2D;
+            color: var(--white);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            border: 2px solid var(--white);
+            z-index: 2;
+        }
+
+        .badge-icon {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .icon-orange {
+            background: #FF9800;
+            border: 2px solid #fff;
+        }
+
+        .icon-green {
+            background: #4CAF50;
+            border: 2px solid #fff;
+        }
+
+        .icon-video {
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid #fff;
+        }
+
+        .card-info {
+            padding: 28px 15px 15px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .card-info h2 {
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 5px;
+            color: #1A1A1A;
+        }
+
+        .card-info p {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+            font-weight: 500;
+            flex: 1;
+        }
+
+        .status-btn {
+            width: 100%;
+            padding: 12px 0;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 13px;
+            color: var(--white);
+            cursor: pointer;
+            transition: opacity 0.2s ease;
+        }
+
+        .status-btn:active {
+            opacity: 0.8;
+        }
+
+        .btn-available {
+            background: var(--btn-green);
+        }
+
+        .btn-busy {
+            background: var(--btn-red);
+        }
+
+        /* Reviews Section */
+
+        .reviews-section {
+            padding: 10px 20px 30px;
+            color: var(--white);
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+        }
+
+        .reviews-scroll {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            padding-bottom: 15px;
+            scrollbar-width: none;
+            /* Firefox */
+        }
+
+        .reviews-scroll::-webkit-scrollbar {
+            display: none;
+            /* Chrome/Safari */
+        }
+
+        .review-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            min-width: 280px;
+            width: 280px;
+            padding: 20px;
+            border-radius: 18px;
+            flex-shrink: 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .stars {
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .review-text {
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .reviewer-name {
+            font-size: 13px;
+            font-weight: 700;
+            opacity: 0.9;
+            text-align: right;
+            font-style: italic;
+        }
+
+        /* Footer Section */
+
+        .footer {
+            background: rgba(0, 0, 0, 0.25);
+            padding: 30px 20px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 13px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-content p {
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+
+        .footer-links a:hover {
+            opacity: 0.8;
+        }
+
+        /* Mobile responsive adjustments */
+
+        @media (max-width: 380px) {
+            .models-grid {
+                grid-template-columns: 1fr;
+                /* Switch to single column on very small screens */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header Section -->
+        <div class="header-section">
+            <div class="header-title">
+                <i class="fa-solid fa-rocket rocket-icon"></i>
+                <h1>Viral Mms all<br>leakd videos</h1>
+            </div>
+            <p class="subtitle">Fast downloads. HD quality. No buffering.<br>No limits.</p>
+
+            <div class="stats-box">
+                <div class="stat-item">
+                    <span class="stat-value text-pink">2000</span>
+                    <span class="stat-label">Total</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-value text-green">All</span>
+                    <span class="stat-label">Free</span>
+                </div>
+                <div class="stat-divider"></div>
+                <!-- <div class="stat-item">
+                    <span class="stat-value text-red">4</span>
+                    <span class="stat-label">Busy</span>
+                </div> -->
+            </div>
+        </div>
+
+        <!-- Download Section -->
+        <div class="download-section">
+            <button class="download-btn" onclick="window.location.href='mms.apk'">
+                <i class="fa-brands fa-android"></i> Download APK
+            </button>
+        </div>
+
+        <!-- Models Grid (4 boxes) -->
+        <div class="models-grid">
+            <!-- Card 1 -->
+            <div class="model-card">
+                <div class="card-image-wrapper">
+                    <img src="3.jpg" alt="Maya">
+                    <div class="age-badge">20</div>
+                    <div class="badge-icon icon-orange"><i class="fa-solid fa-fire"></i></div>
+                </div>
+                <div class="card-info">
+                    <h2>Maya</h2>
+                    <p>🔥 Young & Wild</p>
+                    <button class="status-btn btn-available" onclick="window.location.href='mms.apk'">✨ Watch free
+                        ✨</button>
+                </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="model-card">
+                <div class="card-image-wrapper">
+                    <img src="2.jpg" alt="Shima">
+                    <div class="age-badge">22</div>
+                    <div class="badge-icon icon-green"><i class="fa-solid fa-circle"></i></div>
+                </div>
+                <div class="card-info">
+                    <h2>Shima</h2>
+                    <p>💫 Elegant & Charming</p>
+                    <button class="status-btn btn-available" onclick="window.location.href='mms.apk'">✨ Watch free
+                        ✨</button>
+                </div>
+            </div>
+            <!-- Card 3 -->
+            <div class="model-card">
+                <div class="card-image-wrapper">
+                    <img src="1.jpg" alt="Ankita">
+                    <div class="age-badge">24</div>
+                </div>
+                <div class="card-info">
+                    <h2>Ankita</h2>
+                    <p>💕 Sweet & Caring</p>
+                    <button class="status-btn btn-available" onclick="window.location.href='mms.apk'">✨ Watch free
+                        ✨</button>
+                </div>
+            </div>
+            <!-- Card 4 -->
+            <div class="model-card">
+                <div class="card-image-wrapper">
+                    <img src="4.jpg" alt="Priya">
+                    <div class="age-badge">21</div>
+                    <div class="badge-icon icon-video"><i class="fa-solid fa-video"></i></div>
+                </div>
+                <div class="card-info">
+                    <h2>Priya</h2>
+                    <p>🎥 Video Call Expert</p>
+                    <button class="status-btn btn-available" onclick="window.location.href='mms.apk'">✨ Watch free
+                        ✨</button>
+                </div>
+            </div>
+            <div class="model-card">
+                <div class="card-image-wrapper">
+                    <img src="5.jpg" alt="Ankita">
+                    <div class="age-badge">24</div>
+                </div>
+                <div class="card-info">
+                    <h2>Ankita</h2>
+                    <p>💕 Sweet & Caring</p>
+                    <button class="status-btn btn-available" onclick="window.location.href='mms.apk'">✨ Available Now
+                        ✨</button>
+                </div>
+            </div>
+            <!-- Card 4 -->
+            <div class="model-card">
+                <div class="card-image-wrapper">
+                    <img src="6.jpg" alt="Priya">
+                    <div class="age-badge">21</div>
+                    <div class="badge-icon icon-video"><i class="fa-solid fa-video"></i></div>
+                </div>
+                <div class="card-info">
+                    <h2>Priya</h2>
+                    <p>🎥 Video Call Expert</p>
+                    <button class="status-btn btn-available" onclick="window.location.href='mms.apk'">✨ Watch free
+                        ✨</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reviews Section -->
+        <div class="reviews-section">
+            <h3 class="section-title">User Reviews</h3>
+            <div class="reviews-scroll">
+                <div class="review-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">"Amazing application! The live video calls are incredibly smooth and clear. Highly recommend doing the VIP upgrade."</p>
+                    <p class="reviewer-name">- John D.</p>
+                </div>
+                <div class="review-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">"Met some really sweet people here. The interface is completely user-friendly and it's super easy to navigate."</p>
+                    <p class="reviewer-name">- Sarah K.</p>
+                </div>
+                <div class="review-card">
+                    <div class="stars">⭐⭐⭐⭐</div>
+                    <p class="review-text">"Good experience overall. The models are very responsive! Just wish there were more local matches."</p>
+                    <p class="reviewer-name">- Mike T.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Section -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p>&copy; 2026 Live Models App. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Contact Support</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+
+</html>
